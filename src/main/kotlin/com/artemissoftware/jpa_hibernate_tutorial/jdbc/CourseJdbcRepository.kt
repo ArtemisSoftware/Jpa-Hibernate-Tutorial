@@ -2,6 +2,7 @@ package com.artemissoftware.jpa_hibernate_tutorial.jdbc
 
 import com.artemissoftware.jpa_hibernate_tutorial.Course
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.jdbc.core.BeanPropertyRowMapper
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
 
@@ -23,6 +24,14 @@ class CourseJdbcRepository {
         springJdbcTemplate.update(DELETE_QUERY_ARGUMENTS, id)
     }
 
+    fun findById(id: Long): Course? {
+        return springJdbcTemplate.queryForObject(
+            SELECT_QUERY_ARGUMENTS,
+            BeanPropertyRowMapper(Course::class.java),
+            id
+        )
+    }
+
     companion object {
         const val INSERT_QUERY =
             """
@@ -36,6 +45,11 @@ class CourseJdbcRepository {
         const val DELETE_QUERY_ARGUMENTS =
             """
                 delete from course where id = ?;
+            """
+
+        const val SELECT_QUERY_ARGUMENTS =
+            """
+                SELECT * FROM course where id = ?;
             """
     }
 }

@@ -16,5 +16,6 @@ class CourseJdbcCommandLineRunner : CommandLineRunner {
         repository.insert(Course(1, "The signs", "Gold era"))
         repository.insert(Course(2, "The constellation", "Andromeda"))
         repository.deleteById(1)
+        System.out.println(repository.findById(2))
     }
 }
