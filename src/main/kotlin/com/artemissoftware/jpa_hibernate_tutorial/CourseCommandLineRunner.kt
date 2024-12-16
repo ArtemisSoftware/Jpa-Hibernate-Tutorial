@@ -26,8 +26,13 @@ class CourseCommandLineRunner : CommandLineRunner {
     private fun springDataJpa() = with(courseSpringDataJpaRepository){
         save(Course(1, "The Bronze saints", "Gold era"))
         save(Course(2, "The Poseidon saints", "Andromeda"))
+        save(Course(3, "The Hades saints", "Andromeda"))
         deleteById(1L)
         println(findById(2L))
+        println(findAll())
+        println(count())
+        println(findByAuthor("Andromeda"))
+        println(findByAuthor(""))
     }
 
     private fun jdbc() = with(repositoryJdbc){
