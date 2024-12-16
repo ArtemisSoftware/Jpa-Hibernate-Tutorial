@@ -2,6 +2,7 @@ package com.artemissoftware.jpa_hibernate_tutorial
 
 import com.artemissoftware.jpa_hibernate_tutorial.jdbc.CourseJdbcRepository
 import com.artemissoftware.jpa_hibernate_tutorial.jpa.CourseJpaRepository
+import com.artemissoftware.jpa_hibernate_tutorial.jpa.springdata.CourseSpringDataJpaRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.CommandLineRunner
 import org.springframework.stereotype.Component
@@ -15,8 +16,18 @@ class CourseCommandLineRunner : CommandLineRunner {
     @Autowired
     private lateinit var repositoryJpa: CourseJpaRepository
 
+    @Autowired
+    private lateinit var courseSpringDataJpaRepository: CourseSpringDataJpaRepository
+
     override fun run(vararg args: String?) {
-        jpa()
+        springDataJpa()
+    }
+
+    private fun springDataJpa() = with(courseSpringDataJpaRepository){
+        save(Course(1, "The Bronze saints", "Gold era"))
+        save(Course(2, "The Poseidon saints", "Andromeda"))
+        deleteById(1L)
+        println(findById(2L))
     }
 
     private fun jdbc() = with(repositoryJdbc){
